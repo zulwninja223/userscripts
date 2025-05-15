@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         Auto ulepszanie EQ
 // @namespace    http://tampermonkey.net/
-// @version      1.01
+// @version      1.02
 // @description  Automatyczne wpalanie przedmiotów w oknie Rzemiosła
 // @author       You
 // @match        https://*.margonem.pl/
 // @exclude      https://www.margonem.pl/
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=margonem.pl
+// @downloadURL  https://github.com/zulwninja223/userscripts/raw/refs/heads/main/autoenhance.user.js
+// @updateURL    https://github.com/zulwninja223/userscripts/raw/refs/heads/main/autoenhance.user.js
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 
@@ -299,12 +301,12 @@ class EnhanceManager {
             if (items.length === 0) {
                 return;
             }
-            Utils.lock("crafting");
+            Utils.lock("hard-lock");
             await this.performEnhancement(items);
         } catch (error) {
             message(`Błąd ulepszania: ${error.message}`);
         } finally {
-            Utils.unlock("crafting");
+            Utils.unlock("hard-lock");
             Utils.getCrafting().close();
         }
     }
@@ -350,6 +352,8 @@ class EnhanceManager {
                         if (count >= limit) {
                             this.setDayLimitFinished();
                             this.updateCounter("Limit dzienny osiągnięty.");
+                        } else {
+                            this.updateCounter(`${count}/${limit}`)
                         }
                         res();
                     }
