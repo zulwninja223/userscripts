@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Auto ulepszanie EQ
 // @namespace    http://tampermonkey.net/
-// @version      1.02
+// @version      1.03
 // @description  Automatyczne wpalanie przedmiotów w oknie Rzemiosła
 // @author       You
 // @match        https://*.margonem.pl/
@@ -469,7 +469,7 @@ class EnhanceManager {
             this.updateCounter("Limit dzienny osiągnięty.");
             return;
         }
-        if (!Utils.getItemById(this.config.itemId)) {
+        if (Utils.getItemById(this.config.itemId)?.loc != "g") {
             return;
         }
 
