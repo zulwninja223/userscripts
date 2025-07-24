@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Auto ulepszanie EQ
 // @namespace    http://tampermonkey.net/
-// @version      1.04
+// @version      1.05
 // @description  Automatyczne wpalanie przedmiotów w oknie Rzemiosła
 // @author       You
 // @match        https://*.margonem.pl/
@@ -115,8 +115,8 @@ const Utils = {
       : window.parseItemStat;
   },
 
-  getCrafting() {
-    return this.isNI() ? window.Engine.crafting : window.g.crafting;
+  getCraftingWindow() {
+    return this.isNI() ? window.Engine.crafting.window : window.g.crafting.window;
   },
 
   getLock() {
@@ -312,7 +312,7 @@ class EnhanceManager {
       message(`Błąd ulepszania: ${error.message}`);
     } finally {
       Utils.unlock("hard-lock");
-      Utils.getCrafting().close();
+      Utils.getCraftingWindow().close();
     }
   }
 
